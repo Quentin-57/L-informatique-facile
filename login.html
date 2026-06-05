@@ -1,34 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Login Admin</title>
+  <title>Connexion Admin</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <header>
-  <h1>Connexion Admin</h1>
+  <h1>🔐 Connexion Admin</h1>
+  <p>Accès réservé à l’administrateur</p>
 </header>
 
 <div class="container">
 
+  <h2>Se connecter</h2>
+
   <input id="password" type="password" placeholder="Mot de passe">
-  <button onclick="login()">Se connecter</button>
+
+  <button onclick="login()">Connexion</button>
+
+  <p id="error" style="color:red;"></p>
 
 </div>
 
 <script>
-const ADMIN_PASSWORD = "8394"; // 🔴 change ici
+const ADMIN_PASSWORD = "8394"; // 🔴 nouveau mot de passe
 
 function login() {
   let pass = document.getElementById("password").value;
+  let error = document.getElementById("error");
 
   if (pass === ADMIN_PASSWORD) {
     sessionStorage.setItem("admin", "true");
     window.location.href = "admin.html";
   } else {
-    alert("Mot de passe incorrect");
+    error.textContent = "❌ Mot de passe incorrect";
   }
 }
 </script>
