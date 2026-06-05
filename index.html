@@ -9,6 +9,29 @@
 
 <header>
   <h1>Informatique Facile</h1>
+  <button id="adminBtn"></button>
+
+<script>
+const btn = document.getElementById("adminBtn");
+
+function updateAdminButton() {
+  const isAdmin = sessionStorage.getItem("admin") === "true";
+
+  if (isAdmin) {
+    btn.textContent = "🛠 Admin";
+    btn.onclick = () => {
+      window.location.href = "admin.html";
+    };
+  } else {
+    btn.textContent = "🔐 Connexion admin";
+    btn.onclick = () => {
+      window.location.href = "login.html";
+    };
+  }
+}
+
+updateAdminButton();
+</script>
   <p>Apprendre l'informatique simplement</p>
 </header>
 
