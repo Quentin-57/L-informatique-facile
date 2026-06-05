@@ -1,16 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Informatique Facile</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <header>
   <h1>Informatique Facile</h1>
-  <button id="adminBtn"></button>
+  <p>Apprendre l'informatique simplement</p>
 
+  <!-- 🔘 Bouton admin -->
+  <button id="adminBtn"></button>
+</header>
+
+<div class="container">
+  <h2>📝 Articles récents</h2>
+  <div id="posts"></div>
+</div>
+
+<!-- =========================
+     SCRIPT BLOG (localStorage)
+========================= -->
+<script>
+function getPosts() {
+  return JSON.parse(localStorage.getItem("posts") || "[]");
+}
+
+function displayPosts() {
+  let posts = getPosts();
+  let container = document.getElementById("posts");
+
+  container.innerHTML = "";
+
+  if (posts.length === 0) {
+    container.innerHTML = "<p>Aucun article pour le moment.</p>";
+    return;
+  }
+
+  posts.forEach(p => {
+    container.innerHTML += `
+      <div class="post">
+        <h3>${p.title}</h3>
+        <p>${p.content}</p>
+      </div>
+    `;
+  });
+}
+
+displayPosts();
+</script>
+
+<!-- =========================
+     BOUTON ADMIN INTELLIGENT
+========================= -->
 <script>
 const btn = document.getElementById("adminBtn");
 
@@ -31,17 +77,6 @@ function updateAdminButton() {
 }
 
 updateAdminButton();
-</script>
-  <p>Apprendre l'informatique simplement</p>
-</header>
-
-<div class="container">
-  <div id="posts"></div>
-</div>
-
-<script src="script.js"></script>
-<script>
-  displayPosts();
 </script>
 
 </body>
