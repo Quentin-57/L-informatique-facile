@@ -38,3 +38,18 @@ button {
   border: none;
   cursor: pointer;
 }
+
+#adminBtn {
+  background: #2c3e50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  float: right;
+  margin-top: -40px;
+}
+
+#adminBtn:hover {
+  background: #1a242f;
+}
