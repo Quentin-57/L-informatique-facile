@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Panneau Admin - Informatique Facile</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 🔐 PROTECTION -->
+  <script>
+    if (sessionStorage.getItem("admin") !== "true") {
+      window.location.href = "login.html";
+    }
+  </script>
+
+</head>
+<body>
+
+<header>
+  <h1>🛠️ Panneau d'administration</h1>
+</header>
+
+<div class="container">
+
+  <!-- 🚪 Déconnexion -->
+  <button onclick="logout()">Déconnexion</button>
+
+  <hr>
+
+  <!-- ✍️ Création article -->
+  <h2>Créer un article</h2>
+
+  <input id="title" placeholder="Titre de l'article">
+  <textarea id="content" placeholder="Contenu de l'article"></textarea>
+
+  <button onclick="createPost()">Publier</button>
+
+  <hr>
+
+  <!-- 📚 Liste articles -->
+  <h2>Articles existants</h2>
+  <div id="list"></div>
+
+</div>
+
+<script>
+/* =========================
+   STOCKAGE LOCAL
+========================= */
+
+function getPosts() {
+  return JSON.parse(localStorage.getItem("posts") || "[]");
+}
+
+function savePosts(posts) {
+  localStorage.setItem("posts", JSON.stringify(posts));
+}
+
+/* =========================
+   CREER ARTICLE
+========================= */
+
+function createPost() {
+  let posts = getPosts();
+
+  let title = document.getElementById("title").value;
+  let content = document.getElementById("content").value;
+
+  if (!title || !content) {
+    alert("Remplis tous les champs !");
+    return;
+  }
+
+  posts.push({
+    id: Date.now(),
+    title,
+    content
+  });
+
+  savePosts(posts);
+
+  document.getElementById("title").value = "";
+  document.getElementById("content").value = "";
+
+  loadPosts();
+}
+
+/* =========================
+   SUPPRIMER ARTICLE
+========================= */
+
+function deletePost(id) {
+  let posts = getPosts();
+  posts = posts.filter(p => p.id !== id);
+  savePosts(posts);
+  loadPosts();
+}
+
+/* =========================
+   AFFICHER ARTICLES
+========================= */
+
+function loadPosts() {
+  let posts = getPosts();
+  let list = document.getElementById("list");
+
+  list.innerHTML = "";
+
+  if (posts.length === 0) {
+    list.innerHTML = "<p>Aucun article.</p>";
+    return;
+  }
+
+  posts.forEach(p => {
+    list.innerHTML += `
+      <div class="post">
+        <h3>${p.title}</h3>
+        <p>${p.content}</p>
+        <button onclick="deletePost(${p.id})">🗑 Supprimer</button>
+      </div>
+    `;
+  });
+}
+
+/* =========================
+   DECONNEXION
+========================= */
+
+function logout() {
+  sessionStorage.removeItem("admin");
+  window.location.href = "login.html";
+}
+
+/* INIT */
+loadPosts();
+</script>
+
+</body>
+</html>
